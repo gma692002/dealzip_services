@@ -1,10 +1,8 @@
-const {Blog} = require('../models/blogs'); // Adjust path as needed
-const {Feedback} = require('../models'); // Adjust path as needed
-const {EarlyAccess} = require('../models'); // Adjust path as needed
+const db = require('../models');
+const EarlyAccess = db.models.EarlyAccess;
+const Feedback = db.models.Feedback;
+const Blog = db.models.Blog;
 
-// /controllers/website.controller.js
-
-// Get list of blogs
 exports.findAll = async (req, res) => {
   try {
     const {category} = req.query;
@@ -76,11 +74,13 @@ exports.earlyAccess = async (req, res) => {
     const {email} = req.body;
     // Save email to EarlyAccess table
     await EarlyAccess.create({email});
+    console.log('Early access email saved:', email);
     res.json({
       success: true,
       message: 'Thank you for signing up for early access!',
     });
   } catch (err) {
+    console.log('Error in findAll:', err);
     res.status(500).json({success: false, message: err.message});
   }
 };
@@ -98,6 +98,8 @@ exports.contactUs = async (req, res) => {
       message: 'Your message has been received. We will contact you soon.',
     });
   } catch (err) {
+    console.log(err);
+
     res.status(500).json({success: false, message: err.message});
   }
 };

@@ -9,15 +9,17 @@ const path = require('path');
 var cors = require('cors');
 
 var whitelist = [
-  'http://localhost:8001',
+  'http://localhost:3000',
   'https://api-server.skybill.in',
   'http://api-server.skybill.in',
+  'http://10.1.20.182:3000',
 ];
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1 || !origin) {
       callback(null, true);
     } else {
+      console.log('CORS not allowed for:', origin);
       callback(new Error('Not allowed'));
     }
   },
